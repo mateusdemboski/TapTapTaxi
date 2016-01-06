@@ -41,7 +41,7 @@ var TTTGame = (function () {
         this.roadStartPosition = {
             x: GAME_WIDTH + 100,
             y: GAME_HEIGHT / 2 - 100
-        }
+        };
     }
 
     TTTGame.prototype.taxiJump = function () {
@@ -51,7 +51,7 @@ var TTTGame = (function () {
             this.isJumping = false;
             this.jumpSpeed = JUMP_HEIGHT;
         }
-    }
+    };
 
     TTTGame.prototype.reset = function () {
 
@@ -121,8 +121,8 @@ var TTTGame = (function () {
         return {
             x: xpos,
             y: opposite + this.roadStartPosition.y - 57 // -57 to position the taxi on the road
-        }
-    }
+        };
+    };
 
     TTTGame.prototype.calculateNextObstacleIndex = function () {
         // We calculate an index in the future, with some randomness (between 3 and 10 tiles in the future).
@@ -168,18 +168,24 @@ var TTTGame = (function () {
 
     };
 
-    TTTGame.prototype.createTileAtIndex = function (tile, index) {
+    TTTGame.prototype.addTileAtIndex = function (sprite, index) {
+        sprite.anchor.setTo(0.5,1.0);
+
         var middle = 4; // The middle layer
 
         // < 0 if it's a layer below the middle
         // > 0 it's a layer above the middle
         var offset = index - middle;
 
-        var x = this.roadStartPosition.x;
-        var y = this.roadStartPosition.y + offset * TILE_HEIGHT;
-        var sprite = new Phaser.Sprite(this.game, x, y, tile);
-        sprite.anchor.setTo(0.5,1.0);
+        sprite.x = this.roadStartPosition.x;
+        sprite.y = this.roadStartPosition.y + offset * TILE_HEIGHT;
         this.arrTiles[index].addChildAt(sprite, 0);
+    }
+
+    TTTGame.prototype.createTileAtIndex = function (tile, index) {
+        var sprite = new Phaser.Sprite(this.game, 0, 0, tile);
+
+        this.addTileAtIndex(sprite, index);
 
         return sprite;
     };
@@ -199,7 +205,7 @@ var TTTGame = (function () {
         }
 
         return tile;
-    }
+    };
 
     TTTGame.prototype.generateRoad = function () {
 
@@ -213,9 +219,15 @@ var TTTGame = (function () {
             this.calculateNextObstacleIndex();
         }
 
-        this.createTileAtIndex('empty', 3);
+        this.addTileAtIndex(new TTTBuilding(this.game, 0, 0), 0);
+        this.addTileAtIndex(new TTTBuilding(this.game, 0, 0), 3);
+
+        this.createTileAtIndex('tile_road_1', 1);
+        this.createTileAtIndex('empty', 2);
         this.createTileAtIndex('empty', 5);
         this.createTileAtIndex(this.rightQueueOrEmpty(), 6);
+        this.createTileAtIndex('empty', 7);
+        this.createTileAtIndex('water', 8);
 
         var sprite = this.createTileAtIndex(tile, 4);
         // Push the sprite to the array
@@ -251,7 +263,7 @@ var TTTGame = (function () {
 
             i--;
         }
-    }
+    };
 
     TTTGame.prototype.init = function () {
         this.game.stage.backgroundColor = '#9bd3e1';
@@ -265,6 +277,33 @@ var TTTGame = (function () {
         this.game.load.image('obstacle_1', 'static/img/assets/obstacle_1.png');
         this.game.load.image('gameover', 'static/img/assets/gameover.png');
         this.game.load.image('empty', 'static/img/assets/empty.png');
+        this.game.load.image('building_base_1', 'static/img/assets/buildingTiles_124.png'); // Grey
+
+        //Building assets
+        this.game.load.image('building_base_2', 'static/img/assets/buildingTiles_107.png'); // Semi-Red
+        this.game.load.image('building_base_3', 'static/img/assets/buildingTiles_100.png'); // Green
+        this.game.load.image('building_base_4', 'static/img/assets/buildingTiles_099.png'); // Full red
+
+        this.game.load.image('building_middle_small_brown_1', 'static/img/assets/buildingTiles_047.png'); // Small windows brown
+        this.game.load.image('building_middle_small_brown_2', 'static/img/assets/buildingTiles_038.png'); // Big windows brown
+        this.game.load.image('building_middle_big_brown_1', 'static/img/assets/buildingTiles_000.png'); // 2 Big windows brown
+        this.game.load.image('building_middle_big_brown_2', 'static/img/assets/buildingTiles_007.png'); // 1 Big window brown
+
+        this.game.load.image('building_middle_small_beige_1', 'static/img/assets/buildingTiles_051.png'); // Small windows beige
+        this.game.load.image('building_middle_small_beige_2', 'static/img/assets/buildingTiles_044.png'); // Big windows beige
+        this.game.load.image('building_middle_big_beige_1', 'static/img/assets/buildingTiles_008.png'); // 2 Big windows beige
+        this.game.load.image('building_middle_big_beige_2', 'static/img/assets/buildingTiles_015.png'); // 1 Big window beige
+
+        this.game.load.image('building_middle_small_red_1', 'static/img/assets/buildingTiles_054.png'); // Small windows red
+        this.game.load.image('building_middle_small_red_2', 'static/img/assets/buildingTiles_049.png'); // Big windows red
+        this.game.load.image('building_middle_big_red_1', 'static/img/assets/buildingTiles_016.png'); // 2 Big windows red
+        this.game.load.image('building_middle_big_red_2', 'static/img/assets/buildingTiles_023.png'); // 1 Big window red
+
+        this.game.load.image('building_middle_small_grey_1', 'static/img/assets/buildingTiles_056.png'); // Small windows grey
+        this.game.load.image('building_middle_small_grey_2', 'static/img/assets/buildingTiles_053.png'); // Big windows grey
+        this.game.load.image('building_middle_big_grey_1', 'static/img/assets/buildingTiles_024.png'); // 2 Big windows grey
+        this.game.load.image('building_middle_big_grey_2', 'static/img/assets/buildingTiles_031.png'); // 1 Big window grey
+        this.game.load.image('water', 'static/img/assets/water.png');
         this.game.load.image('green_start', 'static/img/assets/green_start.png');
         this.game.load.image('green_middle_empty', 'static/img/assets/green_middle_empty.png');
         this.game.load.image('green_middle_tree', 'static/img/assets/green_middle_tree.png');
@@ -294,8 +333,8 @@ var TTTGame = (function () {
         this.taxi.anchor.setTo(0.5, 1.0);
         this.game.add.existing(this.taxi);
 
-        var x = this.game.world.centerX;
-        var y = this.game.world.centerY - 50;
+        x = this.game.world.centerX;
+        y = this.game.world.centerY - 50;
 
         this.gameOverGraphic = new Phaser.Sprite(this.game, x, y, 'gameover');
         this.gameOverGraphic.anchor.setTo(0.5, 0.5);
@@ -325,7 +364,7 @@ var TTTGame = (function () {
 
         // Random amount of trees
         var numberOfTrees = Math.round(Math.random() * 3);
-        i = 0
+        i = 0;
         while (i < numberOfTrees) {
             retval.push('green_middle_tree');
             i++;
@@ -361,7 +400,7 @@ var TTTGame = (function () {
             this.taxiX += (this.taxiTargetX - this.taxiX) / easing;
         }
 
-    }
+    };
 
     TTTGame.prototype.touchDown = function () {
         this.mouseTouchDown = true;
@@ -378,11 +417,11 @@ var TTTGame = (function () {
         if (!this.isJumping) {
             this.isJumping = true;
         }
-    }
+    };
 
     TTTGame.prototype.touchUp = function () {
         this.mouseTouchDown = false;
-    }
+    };
 
     TTTGame.prototype.generateRightQueue = function () {
         var minimumOffset = 5;
@@ -405,14 +444,14 @@ var TTTGame = (function () {
         }
 
         if (this.roadCount > this.nextQueueIndex) {
-            this.generateRightQueue()
+            this.generateRightQueue();
         }
 
         this.numberOfInterations++;
         if (this.numberOfInterations > TILE_WIDTH / SPEED) {
             this.numberOfInterations = 0;
             this.generateRoad();
-        };
+        }
 
         if(!this.isDead) {
             if (this.isJumping) {
