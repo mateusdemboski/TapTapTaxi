@@ -1,7 +1,7 @@
 var TTTBuilding = (function () {
 
     function TTTBuilding(phaserGame, x, y) {
-        Phaser.Sprite.call(this, phaserGame, x, y, this.getRandomBase());
+        Phaser.Sprite.call(this, phaserGame, x, y, 'gameAssets', this.getRandomBase());
         this.game = phaserGame;
 
         this.colors = ['brown', 'beige', 'red', 'grey'];
@@ -40,8 +40,7 @@ var TTTBuilding = (function () {
 
         for (var i = 0; i < numberOfFloors; i++) {
             var floor = this.game.make.sprite(
-                0,
-                0,
+                0, 0, 'gameAssets',
                 this.getRandomFloorForColor(color, WindowType) // Get a random floor
             );
             floor.anchor.setTo(0.5, 1.0);
