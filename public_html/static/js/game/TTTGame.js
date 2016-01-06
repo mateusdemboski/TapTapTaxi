@@ -9,26 +9,29 @@ var TTTGame = (function () {
     function TTTGame(phaserGame) {
         this.game = phaserGame;
 
-        this.hasStarted = false;
+        // Assets
+        this.gameOverGraphic = undefined;
 
+        // Game variables
+        this.hasStarted = false;
         this.mouseTouchDown = false;
         this.isDead = false;
-
+        this.roadCount = 0; // Number of road tiles
+        this.nextObstacleIndex = 0; // Index of where the obstacle tile should render
+        this.numberOfInterations = 0;
         this.arrTiles = [];
 
+        // Taxi Jump variables
         this.jumpSpeed = JUMP_HEIGHT;
         this.isJumping = false;
         this.currentJumpHeight = 0;
 
-        // Road variables
-        this.roadCount = 0; // Number of road tiles
-        this.nextObstacleIndex = 0; // Index of where the obstacle tile should render
         this.arrObstacles = []; // Array of all the objects that are deadly for the taxi
 
+        // Taxi variables
         this.taxi = undefined;
         this.taxiX = TAXI_START_X;
 
-        this.numberOfInterations = 0;
         this.roadStartPosition = {
             x: GAME_WIDTH + 100,
             y: GAME_HEIGHT / 2 - 100
@@ -44,8 +47,59 @@ var TTTGame = (function () {
         }
     }
 
+    TTTGame.prototype.reset = function () {
+         // Game variables
+        this.hasStarted = false;
+        this.isDead = false;
+
+        // Jump variables
+        this.jumpSpeed = JUMP_HEIGHT;
+        this.isJumping = false;
+        this.currentJumpHeight = 0;
+
+        // Road variables
+        this.nextObstacleIndex = 0;
+        this.arrObstacles = [];
+
+        this.mouseTouchDown = false;
+
+        // Taxi properties
+        this.game.tweens.removeFrom(this.taxi);
+        this.taxi.rotation = 0;
+        this.taxiX = TAXI_START_X;
+
+        // Reset graphic visibility
+        this.gameOverGraphic.visible = false;
+    };
+
     TTTGame.prototype.gameOver = function () {
-        this.taxi.tint = 0xff0000;
+
+        this.gameOverGraphic.visible = true;
+        this.isDead = true;
+        this.hasStarted = false;
+        this.arrObstacles = [];
+
+        var dieSpeed = SPEED / 10;
+
+        var tween_1 = this.game.add.tween(this.taxi);
+        tween_1.to({
+            x: this.taxi.x + 20,
+            y: this.taxi.y -40
+        }, 300 * dieSpeed, Phaser.Easing.Quadratic.Out);
+
+        var tween_2 = this.game.add.tween(this.taxi);
+        tween_2.to({
+            y: GAME_HEIGHT + 40
+        }, 1000 * dieSpeed, Phaser.Easing.Quadratic.In);
+
+        tween_1.chain(tween_2);
+        tween_1.start();
+
+        var tween_rotate = this.game.add.tween(this.taxi);
+        tween_rotate.to({
+          angle: 200
+        }, 1300 * dieSpeed, Phaser.Easing.Linear.None);
+        tween_rotate.start();
     };
 
     TTTGame.prototype.calculatePositionOnRoadWithXPosition = function (xpos) {
@@ -158,14 +212,27 @@ var TTTGame = (function () {
         this.game.load.image('tile_road_1', 'static/img/assets/tile_road_1.png');
         this.game.load.image('taxi', 'static/img/assets/taxi.png');
         this.game.load.image('obstacle_1', 'static/img/assets/obstacle_1.png');
+        this.game.load.image('gameover', 'static/img/assets/gameover.png');
     };
 
     TTTGame.prototype.create = function () {
         this.generateRoad();
 
-        this.taxi = new Phaser.Sprite(this.game, this.game.world.centerX, this.game.world.centerY, 'taxi');
+        var x = this.game.world.centerX;
+        var y = this.game.world.centerY;
+        this.taxi = new Phaser.Sprite(this.game, x, y, 'taxi');
         this.taxi.anchor.setTo(0.5, 1.0);
         this.game.add.existing(this.taxi);
+
+        var x = this.game.world.centerX;
+        var y = this.game.world.centerY - 50;
+
+        this.gameOverGraphic = new Phaser.Sprite(this.game, x, y, 'gameover');
+        this.gameOverGraphic.anchor.setTo(0.5, 0.5);
+        this.game.add.existing(this.gameOverGraphic);
+
+        this.reset();
+
     };
 
     TTTGame.prototype.touchDown = function () {
@@ -173,6 +240,11 @@ var TTTGame = (function () {
 
         if(!this.hasStarted) {
           this.hasStarted = true;
+        }
+
+        if(this.isDead) {
+            this.reset();
+            return;
         }
 
         if (!this.isJumping) {
@@ -202,16 +274,18 @@ var TTTGame = (function () {
             this.generateRoad();
         };
 
-        if (this.isJumping) {
-            this.taxiJump();
+        if(!this.isDead) {
+            if (this.isJumping) {
+                this.taxiJump();
+            }
+
+            var pointOnRoad = this.calculatePositionOnRoadWithXPosition(this.taxiX);
+
+            this.taxi.x = pointOnRoad.x;
+            this.taxi.y = pointOnRoad.y + this.currentJumpHeight; // Add the currentJumpHeight to the taxi.y value
+
+            this.checkObstacles();
         }
-
-        var pointOnRoad = this.calculatePositionOnRoadWithXPosition(this.taxiX);
-
-        this.taxi.x = pointOnRoad.x;
-        this.taxi.y = pointOnRoad.y + this.currentJumpHeight; // Add the currentJumpHeight to the taxi.y value
-
-        this.checkObstacles();
 
         this.moveTilesWithSpeed(SPEED);
     };
