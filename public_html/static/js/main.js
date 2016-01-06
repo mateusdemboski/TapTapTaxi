@@ -9,11 +9,11 @@ var state = {
 };
 
 var phaserGame = new Phaser.Game(
-  GAME_WIDTH,
-  GAME_HEIGHT,
-  Phaser.AUTO, // Auto will switch between WebGL and Canvas
-  'container',
-  state
+  GAME_WIDTH, // Width
+  GAME_HEIGHT, // Width
+  Phaser.AUTO, // Renderer. Auto will switch between WebGL and Canvas
+  'container', // ID For the containing tag
+  state // State object
 );
 
 var taxiGame = new TTTGame(phaserGame);
