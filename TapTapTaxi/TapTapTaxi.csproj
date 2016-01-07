@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <ProjectGuid>{7B3A7DE6-E210-4002-8AB8-1E0ECD3C4B24}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <OutputPath>bin</OutputPath>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <TypeScriptToolsVersion>1.7</TypeScriptToolsVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+  </PropertyGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="index.html" />
+    <Content Include="static\audio\hit.wav" />
+    <Content Include="static\audio\jump.wav" />
+    <Content Include="static\audio\score.wav" />
+    <Content Include="static\css\reset.css" />
+    <Content Include="static\css\screen.css" />
+    <Content Include="static\img\assets\buildingTiles_000.png" />
+    <Content Include="static\img\assets\buildingTiles_007.png" />
+    <Content Include="static\img\assets\buildingTiles_008.png" />
+    <Content Include="static\img\assets\buildingTiles_015.png" />
+    <Content Include="static\img\assets\buildingTiles_016.png" />
+    <Content Include="static\img\assets\buildingTiles_023.png" />
+    <Content Include="static\img\assets\buildingTiles_024.png" />
+    <Content Include="static\img\assets\buildingTiles_031.png" />
+    <Content Include="static\img\assets\buildingTiles_038.png" />
+    <Content Include="static\img\assets\buildingTiles_044.png" />
+    <Content Include="static\img\assets\buildingTiles_047.png" />
+    <Content Include="static\img\assets\buildingTiles_049.png" />
+    <Content Include="static\img\assets\buildingTiles_051.png" />
+    <Content Include="static\img\assets\buildingTiles_053.png" />
+    <Content Include="static\img\assets\buildingTiles_054.png" />
+    <Content Include="static\img\assets\buildingTiles_056.png" />
+    <Content Include="static\img\assets\buildingTiles_099.png" />
+    <Content Include="static\img\assets\buildingTiles_100.png" />
+    <Content Include="static\img\assets\buildingTiles_107.png" />
+    <Content Include="static\img\assets\buildingTiles_124.png" />
+    <Content Include="static\img\assets\empty.png" />
+    <Content Include="static\img\assets\gameOver.png" />
+    <Content Include="static\img\assets\green_end.png" />
+    <Content Include="static\img\assets\green_middle_empty.png" />
+    <Content Include="static\img\assets\green_middle_tree.png" />
+    <Content Include="static\img\assets\green_start.png" />
+    <Content Include="static\img\assets\logo.png" />
+    <Content Include="static\img\assets\obstacle_1.png" />
+    <Content Include="static\img\assets\tapToStart.png" />
+    <Content Include="static\img\assets\taxi.png" />
+    <Content Include="static\img\assets\tile_road_1.png" />
+    <Content Include="static\img\assets\water.png" />
+    <Content Include="static\img\spritesheets\gameAssets.png" />
+    <Content Include="static\img\spritesheets\numbers.png" />
+    <Content Include="static\img\spritesheets\playButton.png" />
+    <Content Include="static\js\game\TTTBlinker.js" />
+    <Content Include="static\js\game\TTTBuilding.js" />
+    <Content Include="static\js\game\TTTCounter.js" />
+    <Content Include="static\js\game\TTTGame.js" />
+    <Content Include="static\js\libs\phaser-debug.js" />
+    <Content Include="static\js\libs\phaser.js" />
+    <Content Include="static\js\libs\phaser.min.js" />
+    <Content Include="static\js\main.js" />
+    <Content Include="web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="static\css\.gitkeep" />
+    <Content Include="static\img\.gitkeep" />
+    <Content Include="static\img\spritesheets\gameAssets.json" />
+    <Content Include="static\img\spritesheets\numbers.json" />
+    <Content Include="static\img\spritesheets\playButton.json" />
+    <Content Include="static\js\game\.gitkeep" />
+    <Content Include="static\js\libs\phaser.map" />
+    <None Include="web.Debug.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+    <None Include="web.Release.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="static\js\libs\p2.d.ts" />
+    <TypeScriptCompile Include="static\js\libs\phaser.d.ts" />
+    <TypeScriptCompile Include="static\js\libs\pixi.d.ts" />
+    <TypeScriptCompile Include="static\js\main.ts" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>TapTapTaxi</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyName>TapTapTaxi</AssemblyName>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\WebApplications\Microsoft.WebApplication.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\WebApplications\Microsoft.WebApplication.targets')" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>3013</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:3013/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <TypeScriptRemoveComments>false</TypeScriptRemoveComments>
+    <TypeScriptSourceMap>true</TypeScriptSourceMap>
+    <TypeScriptTarget>ES5</TypeScriptTarget>
+    <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
+    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptModuleKind>System</TypeScriptModuleKind>
+    <TypeScriptOutFile />
+    <TypeScriptOutDir />
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <TypeScriptRemoveComments>true</TypeScriptRemoveComments>
+    <TypeScriptSourceMap>false</TypeScriptSourceMap>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+</Project>
