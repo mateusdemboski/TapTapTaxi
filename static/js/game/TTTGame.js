@@ -244,7 +244,17 @@ var TapTapTaxi;
             }
         };
         Game.prototype.init = function () {
-            this.game.scale.currentScaleMode = Phaser.ScaleManager.SHOW_ALL;
+            if (this.game.device.desktop) {
+                this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+                this.game.scale.maxWidth = TapTapTaxi.Main.GAME_WIDTH;
+                this.game.scale.maxHeight = TapTapTaxi.Main.GAME_HEIGHT;
+            }
+            else {
+                this.game.scale.scaleMode = Phaser.ScaleManager.RESIZE;
+                this.game.scale.maxWidth = TapTapTaxi.Main.GAME_WIDTH;
+                this.game.scale.maxHeight = TapTapTaxi.Main.GAME_HEIGHT;
+                this.game.scale.forceOrientation(false, true);
+            }
             this.game.scale.pageAlignVertically = true;
             this.game.scale.pageAlignHorizontally = true;
             this.game.stage.backgroundColor = '#9bd3e1';

@@ -3,13 +3,8 @@ var TapTapTaxi;
     var Main = (function () {
         function Main() {
         }
-        Main.calculateGameWidthByHeight = function (height) {
-            return Math.ceil((Main.GAME_WIDTH_BASE * height) / Main.GAME_HEIGHT_BASE);
-        };
-        Main.GAME_WIDTH_BASE = 480;
-        Main.GAME_HEIGHT_BASE = 640;
-        Main.GAME_WIDTH = Main.calculateGameWidthByHeight(document.body.offsetHeight);
-        Main.GAME_HEIGHT = document.body.offsetHeight;
+        Main.GAME_WIDTH = 480;
+        Main.GAME_HEIGHT = 640;
         return Main;
     })();
     TapTapTaxi.Main = Main;
