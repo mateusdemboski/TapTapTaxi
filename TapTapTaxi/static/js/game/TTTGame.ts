@@ -30,6 +30,7 @@
         private arrTiles: Array<any> = [];
         private nextQueueIndex: number = 0;
         private rightQueue: Array<any> = [];
+        private enabledSfx: boolean = true;
         private sfx;
 
         // Taxi Jump variables
@@ -132,7 +133,9 @@
         }
 
         private gameOver(): void {
-            this.sfx.hit.play();
+            if (this.enabledSfx) {
+                this.sfx.hit.play();
+            }
 
             this.btnRestart.visible = true;
             this.blackOverlay.alpha = 0.6;
@@ -197,7 +200,9 @@
                     // Increase the score
                     this.scoreCount++;
 
-                    this.sfx.score.play();
+                    if (this.enabledSfx) {
+                        this.sfx.score.play();
+                    }
 
                     // Set the score & animate it!
                     this.counter.setScore(this.scoreCount, true);
@@ -318,6 +323,9 @@
         }
 
         public init(): void {
+            this.game.scale.currentScaleMode = Phaser.ScaleManager.SHOW_ALL;
+            this.game.scale.pageAlignVertically = true;
+            this.game.scale.pageAlignHorizontally = true;
             this.game.stage.backgroundColor = '#9bd3e1';
             //this.game.add.plugin(Phaser.Plugin.Debug);
         }
@@ -518,7 +526,10 @@
 
             if (!this.isJumping) {
                 this.isJumping = true;
-                this.sfx.jump.play();
+
+                if (this.enabledSfx) {
+                    this.sfx.jump.play();
+                }
             }
 
         }
@@ -571,6 +582,10 @@
                 this.checkObstacles();
             }
 
+            var speedMultiplier = 0.025;
+            var gameSpeed = Game.SPEED + Math.ceil(this.scoreCount * speedMultiplier);
+
+            //this.moveTilesWithSpeed(gameSpeed);
             this.moveTilesWithSpeed(Game.SPEED);
         }
 
