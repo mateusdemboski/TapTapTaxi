@@ -19,6 +19,7 @@ var TapTapTaxi;
             this.arrTiles = [];
             this.nextQueueIndex = 0;
             this.rightQueue = [];
+            this.enabledSfx = true;
             this.isJumping = false;
             this.currentJumpHeight = 0;
             this.arrObstacles = []; // Array of all the objects that are deadly for the taxi
@@ -95,7 +96,9 @@ var TapTapTaxi;
             this.tapToStart.blinker.startBlinking();
         };
         Game.prototype.gameOver = function () {
-            this.sfx.hit.play();
+            if (this.enabledSfx) {
+                this.sfx.hit.play();
+            }
             this.btnRestart.visible = true;
             this.blackOverlay.alpha = 0.6;
             this.blackOverlay.visible = true;
@@ -147,7 +150,9 @@ var TapTapTaxi;
                     this.arrObstacles.splice(i, 1);
                     // Increase the score
                     this.scoreCount++;
-                    this.sfx.score.play();
+                    if (this.enabledSfx) {
+                        this.sfx.score.play();
+                    }
                     // Set the score & animate it!
                     this.counter.setScore(this.scoreCount, true);
                 }
@@ -239,7 +244,7 @@ var TapTapTaxi;
             }
         };
         Game.prototype.init = function () {
-			this.game.scale.currentScaleMode = Phaser.ScaleManager.SHOW_ALL;
+            this.game.scale.currentScaleMode = Phaser.ScaleManager.SHOW_ALL;
             this.game.scale.pageAlignVertically = true;
             this.game.scale.pageAlignHorizontally = true;
             this.game.stage.backgroundColor = '#9bd3e1';
@@ -391,7 +396,9 @@ var TapTapTaxi;
             }
             if (!this.isJumping) {
                 this.isJumping = true;
-                this.sfx.jump.play();
+                if (this.enabledSfx) {
+                    this.sfx.jump.play();
+                }
             }
         };
         Game.prototype.touchUp = function () {
@@ -433,6 +440,9 @@ var TapTapTaxi;
                 this.taxi.y = pointOnRoad.y + this.currentJumpHeight; // Add the currentJumpHeight to the taxi.y value
                 this.checkObstacles();
             }
+            var speedMultiplier = 0.025;
+            var gameSpeed = Game.SPEED + Math.ceil(this.scoreCount * speedMultiplier);
+            //this.moveTilesWithSpeed(gameSpeed);
             this.moveTilesWithSpeed(Game.SPEED);
         };
         Game.ANGLE = 26.55;
@@ -445,16 +455,4 @@ var TapTapTaxi;
     })();
     TapTapTaxi.Game = Game;
 })(TapTapTaxi || (TapTapTaxi = {}));
-/*
-var TTTGame = (function () {
-
-    TTTGame.prototype.update = function () {
-
-        
-    };
-    return TTTGame;
-
-})();
-
-*/ 
 //# sourceMappingURL=TTTGame.js.map
