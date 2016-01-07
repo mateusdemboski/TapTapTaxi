@@ -2,16 +2,8 @@
 
     export class Main {
 
-        public static GAME_WIDTH_BASE: number = 480;
-        public static GAME_HEIGHT_BASE: number = 640;
-
-        public static GAME_WIDTH: number = Main.calculateGameWidthByHeight(document.body.offsetHeight);
-        public static GAME_HEIGHT: number = document.body.offsetHeight;
-
-        public static calculateGameWidthByHeight(height) {
-
-            return Math.ceil((Main.GAME_WIDTH_BASE * height) / Main.GAME_HEIGHT_BASE);
-        }
+        public static GAME_WIDTH: number = 480;
+        public static GAME_HEIGHT: number = 640;
 
     }
 
