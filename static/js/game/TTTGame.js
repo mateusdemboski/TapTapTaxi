@@ -239,6 +239,9 @@ var TapTapTaxi;
             }
         };
         Game.prototype.init = function () {
+			this.game.scale.currentScaleMode = Phaser.ScaleManager.SHOW_ALL;
+            this.game.scale.pageAlignVertically = true;
+            this.game.scale.pageAlignHorizontally = true;
             this.game.stage.backgroundColor = '#9bd3e1';
             //this.game.add.plugin(Phaser.Plugin.Debug);
         };
