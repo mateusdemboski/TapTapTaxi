@@ -577,16 +577,3 @@
     }
 
 }
-
-/*
-var TTTGame = (function () {
-
-    TTTGame.prototype.update = function () {
-
-        
-    };
-    return TTTGame;
-
-})();
-
-*/
